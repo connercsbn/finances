@@ -1,0 +1,18 @@
+{% extends "finance_site/layout.html" %}
+{% load static %}
+{% block body %}
+{% csrf_token %}
+    <h2 id="data" class="hideInitial" data-id="{{request.user.id}}" data-month="{{month}}" data-year="{{year}}">{{ request.user }}</h2>
+    <a href="/"><button class="btn btn-sm btn-outline-primary hideInitial" id="home">Your Finances</button></a>
+    <a class="btn btn-sm btn-outline-primary hideInitial" href="{% url 'logout' %}">Log Out</a>
+    <hr>
+        <div class="container">
+    <p class="bucketz hideInitial">
+        <p class="answer hideInitial">
+        </p>
+    </p>
+        </div>
+{% endblock %}
+
+{% block script %}
+{% endblock %}

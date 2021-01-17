@@ -1,0 +1,47 @@
+body {}
+.addBucketName {}
+input,button,select,optgroup,textarea {margin: 0;font-family: inherit;font-size: inherit;line-height: inherit;}
+.btn, .input-group-text, .form-control {border-radius:0;}
+.colorZero {background-color: white;}
+.colorZero:focus { border: 2px solid rgb(197, 178, 197); box-shadow: none; background-color: white;}
+.colorOne, .colorOne:hover {background-color: rgb(255, 255, 235);}
+.colorOne:focus { border: 2px solid rgb(167, 167, 111); box-shadow: none; }
+.colorTwo, .colorTwo:hover, .colorTwo:focus {background-color: #ffebeb;}
+.colorTwo:focus { border: 2px solid rgb(238, 164, 238); box-shadow: none; }
+.colorThree, .colorThree:hover, .colorThree:focus {background-color: #f7ffeb;}
+.colorThree:focus { border: 2px solid rgb(173, 172, 97); box-shadow: none; }
+.colorFour, .colorFour:hover, .colorFour:focus {background-color: #ebfff7;}
+.colorFour:focus { border: 2px solid rgb(100, 135, 138); box-shadow: none; }
+.colorFive, .colorFive:hover, .colorFive:focus {background-color: #ebf7ff;}
+.colorFive:focus { border: 2px solid rgb(94, 177, 180); box-shadow: none; }
+.colorSix, .colorSix:hover, .colorSix:focus {background-color: #f2ebff;}
+.colorSix:focus { border: 2px solid rgb(182, 100, 182); box-shadow: none; }
+
+.hideInitial {display:none;}
+.outercontainer {max-width: 950px;margin:auto;}
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  flex-grow: 1;
+}
+
+.bucket {  
+  width: 100%;
+}
+
+#offerSection, .bucketz div, #submit {
+  margin:1em;
+}
+
+#offerSection {
+  width: 17em;
+  background-color: rgb(221, 221, 247);
+  padding: 1em;
+}
+
+#monthSelectSection {
+  width: 100%;
+}
+.answer {
+  display: inline-block;
+}
