@@ -12,28 +12,25 @@ document.addEventListener('DOMContentLoaded', function() {
       .then(availableMonths => availableMonths.json())
       .then(availableMonths => offerMonths(availableMonths));
       addBucketSection();
-      loadCalendar();
-      addSubmitButton();
     } else if (data[0].buckets.length == 0) {
       fetch('/available_months')
       .then(availableMonths => availableMonths.json())
       .then(availableMonths => offerMonths(availableMonths));
       doWithData(data);
       addBucketSection(data[0].income);
-      loadCalendar();
-      addSubmitButton();
     }
     else {
       doWithData(data);
-      loadCalendar();
       addBucketSection(data[0].income);
-      addSubmitButton();
     }
+      loadCalendar();
+      addSubmitButton();
+      showAllAsCurrency();
     // unhide initial layout
+      monthTitle(month, year);
     document.querySelectorAll('.hideInitial').forEach( hiddenElement => {
       hiddenElement.classList.remove("hideInitial");
     })
-    showAllAsCurrency()
   })
 })
 function addBucketSection(income, section) {
@@ -81,7 +78,7 @@ function addBucketSection(income, section) {
     document.querySelectorAll('.bucket').forEach(bucket => {
       // showAsCurrency(bucket.querySelector('input[type="text"]'));
       // console.log(bucket.querySelector('input[type="text"]'));
-      console.log(bucket.querySelector('input[type="text"]'));
+      // console.log(bucket.querySelector('input[type="text"]'));
     });
 }
 function hideSection(text, button) {
@@ -162,34 +159,43 @@ function addSubmitButton(message) {
   let submitButton = document.createElement('button');
   submitButton.className = 'btn btn-primary';
   submitButton.type = 'button';
-  submitButton.innerHTML = 'Submit';
+  submitButton.innerHTML = 'Enter';
   submitButton.id = 'submit';
   submitButton.onclick = submit;
   submitButton = document.querySelector('.bucketz').appendChild(submitButton); 
   // console.log(submitButton);
   let answerSection = document.querySelector('.answer');
+  if (answerSection == null) {
+    answerSection = document.createElement('p');
+    answerSection.className = 'answer';
+  }
   answerSection = document.querySelector('.bucketz').appendChild(answerSection);
 }
 function submit() {
     let total = 0;
+    let newValue = 'unset';
     document.querySelectorAll('.bucket').forEach(bucket => {
       // if bucket is income, subract rather than add value.
       // if there is no income bucket, set hasIncome to false so it can be set to 0 in the postMonth function
       // console.log(bucket);
       if (bucket.className.split(' ').indexOf('income') > 0) {
-        total = total + parseInt(
+        newValue = parseInt(
           bucket.querySelector('input').value.replace(/[^0-9]+/g,"")
-          );
+        );
+        total = isNaN(newValue) ? total : total + newValue;
       // else, add value
       } else {
-        total = total - parseInt(
+        newValue = parseInt(
           bucket.querySelector('input').value.replace(/[^0-9]+/g,"")
-          );
+        );
+        total = isNaN(newValue) ? total :total - newValue;
       }
     })
     let overUnder = (total > 0)? 'under' : 'over';
-    total = Math.abs(total);
-    document.querySelector('.answer').innerHTML = `${total.toLocaleString()} ${overUnder} budget.`;
+    total = Math.abs(total);     
+    let answer = document.querySelector('.answer');
+    answer.className = answer.className.split(' ')[0] + ' ' + overUnder;
+    answer.innerHTML = `${total.toLocaleString()} ${overUnder} budget.`;
 
     postMonth();
  }
@@ -245,6 +251,8 @@ function populate() {
 }
 function addBucket() {
   let bucketName = document.querySelector('#addBucketName').value;
+  bucketName = bucketName.length > 0 ? bucketName : 'Additional Expense';
+  // console.log(bucketName.length);
   let newBucket = document.createElement('div');
   newBucket.className = 'bucket input-group mb-3';
   let newBucketContent = (
@@ -388,6 +396,19 @@ function goToMonth() {
   // console.log(month);
   // console.log(year);
   window.location.href = `/${month}/${year}`;
+}
+function monthTitle(month, year) {
+  const calendarMonths = [0, 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+  const monthtitle = `${calendarMonths[month]} ${year}`;
+  let title = document.createElement('h1');
+  let titleContainer = document.createElement('div');
+  titleContainer.className = 'titleContainer';
+  title.innerHTML = monthtitle;
+  title.className = 'monthtitle';
+  titleContainer = document.querySelector('.container').insertBefore(
+    titleContainer, document.querySelector('.container').firstChild
+  );
+  titleContainer = titleContainer.appendChild(title);
 }
 
 function getCookie(name) {
