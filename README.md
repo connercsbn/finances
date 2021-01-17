@@ -1,2 +1,2 @@
 # finances
-Quickly and easily, store and calculate each month's income and expenses.
+Store and calculate each month's expenses, quickly and easily.
